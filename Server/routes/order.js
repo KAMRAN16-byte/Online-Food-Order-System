@@ -13,12 +13,25 @@ router.post('/', async (req, res) =>
         {
             await pool.query(sql2,[result[0].insertId,item.fid,item.quantity]);
         }
-        res.send(createResult(result[0]));
+        res.send(createResult(result[0],null));
     } catch (err)
     {
-        res.send(createResult(err));
+        res.send(createResult(null,err));
     }
-
 })
+
+router.get('/', async (req, res) =>{
+    const sql = 'SELECT * FROM ORDERS WHERE uid = ?';
+    try{
+        const result = (await pool.query(sql,[req.headers.uid]))[0]
+        res.send(res.send(createResult(result,null)));
+    }
+    catch(err)
+    {
+        res.send(createResult(null,err));
+    }
+})
+
+
 
 module.exports = router;
