@@ -1,18 +1,38 @@
 import AuthenticationBg from "../components/Authentication-bg.tsx";
 import {useState} from "react";
+import {userSignup} from "../services/UserService.ts";
+import {useNavigate} from "react-router";
+
+
 
 
 function SignupPage() {
 
-    const [Name, setName] = useState("");
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    const [Phone, setPhone] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [mobile, setMobile] = useState("");
+    const navigate = useNavigate();
 
     const HandleSubmit = async (e) => {
-        e.target.classList.add("disabled");
+        e.preventDefault();
 
 
+        try{
+            const response = await userSignup({name,email,password,mobile})
+            e.target.reset();
+            if(response.data.status === "success")
+            {
+                navigate("/signin")
+            }
+            else
+            {
+
+            }
+        }
+        catch(err){
+            console.log("Error: ", err)
+        }
     }
 
     return (
@@ -22,8 +42,8 @@ function SignupPage() {
 
             <div className={'relative z-10 h-full w-full border-gray-50 flex flex-col justify-center items-center'}>
                 <div
-                    className={'w-1/4 p-5 border border-gray-50/20 flex flex-col  justify-center items-center bg-black/60  backdrop-blur-sm rounded-lg'}>
-                    <form className={'w-full flex flex-col  justify-center items-center gap-3'}>
+                    className={'w-1/2 xl:w-1/4 p-5 border border-gray-50/20 flex flex-col  justify-center items-center bg-black/60  backdrop-blur-sm rounded-lg'}>
+                    <form onSubmit={HandleSubmit} className={'w-full flex flex-col  justify-center items-center gap-3'}>
 
                         <div className={'font-bold text-2xl text-white/80 mb-5'}>
                             <h1>
@@ -145,7 +165,7 @@ function SignupPage() {
                                     pattern="[0-9]*"
                                     minLength={10}
                                     maxLength={10}
-                                    onChange={e => setPhone(e.target.value)}
+                                    onChange={e => setMobile(e.target.value)}
                                     title="Must be 10 digits"
                                 />
                             </label>
@@ -154,7 +174,7 @@ function SignupPage() {
                         {/*Submit Button*/}
                         <div className={'w-full flex flex-col justify-center items-center'}>
                             <div className="aura">
-                                <button className="btn" onClick={HandleSubmit} type={"submit"}>Register</button>
+                                <button className="btn" type={"submit"}>Register</button>
                             </div>
                         </div>
                     </form>
