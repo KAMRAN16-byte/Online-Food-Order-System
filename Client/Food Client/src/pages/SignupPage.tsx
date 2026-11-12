@@ -2,8 +2,7 @@ import AuthenticationBg from "../components/Authentication-bg.tsx";
 import {useState} from "react";
 import {userSignup} from "../services/UserService.ts";
 import {useNavigate} from "react-router";
-
-
+import {toast} from "react-toastify";
 
 
 function SignupPage() {
@@ -15,24 +14,25 @@ function SignupPage() {
     const navigate = useNavigate();
 
     const HandleSubmit = async (e) => {
+
         e.preventDefault();
+        document.getElementById('submit').classList.add('disabled');
 
-
-        try{
-            const response = await userSignup({name,email,password,mobile})
+        try {
+            const response = await userSignup({name, email, password, mobile})
             e.target.reset();
-            if(response.data.status === "success")
-            {
-                navigate("/signin")
+            if (response.data.status === "success") {
+                toast.success('Sign up successfully :)');
+                setTimeout(() => {
+                    navigate("/");
+                }, 2000)
+            } else {
+                toast.error('Sign up failed :(');
             }
-            else
-            {
-
-            }
-        }
-        catch(err){
+        } catch (err) {
             console.log("Error: ", err)
         }
+        document.getElementById('submit').classList.remove('disabled');
     }
 
     return (
@@ -42,7 +42,7 @@ function SignupPage() {
 
             <div className={'relative z-10 h-full w-full border-gray-50 flex flex-col justify-center items-center'}>
                 <div
-                    className={'w-1/2 xl:w-1/4 p-5 border border-gray-50/20 flex flex-col  justify-center items-center bg-black/60  backdrop-blur-sm rounded-lg'}>
+                    className={'w-3/4 sm:w-1/2 xl:w-1/4 p-5 border border-gray-50/20 flex flex-col  justify-center items-center bg-black/60  backdrop-blur-sm rounded-lg'}>
                     <form onSubmit={HandleSubmit} className={'w-full flex flex-col  justify-center items-center gap-3'}>
 
                         <div className={'font-bold text-2xl text-white/80 mb-5'}>
@@ -99,7 +99,8 @@ function SignupPage() {
                                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                                     </g>
                                 </svg>
-                                <input type="email" id={'Email'} placeholder="mail@site.com" required onChange={e => setEmail(e.target.value)} />
+                                <input type="email" id={'Email'} placeholder="mail@site.com" required
+                                       onChange={e => setEmail(e.target.value)}/>
                             </label>
                             <div className="validator-hint hidden">Enter valid email address</div>
                         </div>
@@ -174,14 +175,17 @@ function SignupPage() {
                         {/*Submit Button*/}
                         <div className={'w-full flex flex-col justify-center items-center'}>
                             <div className="aura">
-                                <button className="btn" type={"submit"}>Register</button>
+                                <button id={'submit'} className="btn" type={"submit"}>Register</button>
                             </div>
                         </div>
                     </form>
 
                     <div className={'text-sm flex items-center justify-center gap-1 mt-5'}>
 
-                        <p>Already Have an Account? <div className={'aura text-orange-600 aura-xs'}><a className={'bg-black/80 border border-gray-50/20 rounded-sm'}>Click Here</a></div> to Sign In</p>
+                        <p>Already Have an Account? <div className={'aura text-orange-600 aura-xs'}><a
+                            className={'bg-black/80 border border-gray-50/20 rounded-sm'}>Click Here</a></div> to Sign
+                            In
+                        </p>
                     </div>
 
                 </div>
