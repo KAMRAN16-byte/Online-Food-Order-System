@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JetClientState">
+    <option name="folders">
+      <list>
+        <folderState>
+          <option name="environmentGroups">
+            <list>
+              <environmentGroupState>
+                <option name="name" value="Default" />
+              </environmentGroupState>
+            </list>
+          </option>
+          <option name="folders">
+            <list>
+              <folderState>
+                <option name="id" value="aa311704-a758-4175-8f19-2b8fdf7e2fa0" />
+                <option name="name" value="User" />
+                <option name="requests">
+                  <list>
+                    <requestState>
+                      <option name="body">
+                        <bodyState>
+                          <option name="raw" value="{&#10;  &quot;email&quot;: &quot;mdkamran_16@outlook.com&quot;,&#10;  &quot;password&quot;: &quot;KamraN@0101&quot;,&#10;}" />
+                          <option name="type" value="JSON" />
+                        </bodyState>
+                      </option>
+                      <option name="id" value="6ea1a063-12ad-4ccc-bedb-49bf4c0ad228" />
+                      <option name="method" value="POST" />
+                      <option name="name" value="New Request" />
+                      <option name="sortWeight" value="1000000" />
+                      <option name="url" value="http://localhost:8000/user/signin" />
+                    </requestState>
+                    <requestState>
+                      <option name="headers">
+                        <list>
+                          <headerState>
+                            <option name="key" value="token" />
+                            <option name="value" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgsImlhdCI6MTc5NDU5NTA2M30.MfU0z-1CxEha482YT5ztk3WURnlqnvbrzIEDj9AhuSI" />
+                          </headerState>
+                        </list>
+                      </option>
+                      <option name="id" value="0a2cd187-8afc-4ed9-9268-a8334d686853" />
+                      <option name="method" value="GET" />
+                      <option name="name" value="Profile" />
+                      <option name="sortWeight" value="2000000" />
+                      <option name="url" value="http://localhost:8000/user" />
+                    </requestState>
+                    <requestState>
+                      <option name="body">
+                        <bodyState>
+                          <option name="raw" value="{&#10;  &quot;mobile&quot; : &quot;8095441880&quot;&#10;}" />
+                          <option name="type" value="JSON" />
+                        </bodyState>
+                      </option>
+                      <option name="headers">
+                        <list>
+                          <headerState>
+                            <option name="key" value="token" />
+                            <option name="value" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgsImlhdCI6MTc5NDYwMzA0Nn0.2q0EMlFHbRfuOL7eE8KcS3hIXRXZs72OolHK8_esoyk" />
+                          </headerState>
+                        </list>
+                      </option>
+                      <option name="id" value="36de5e35-31bb-42ab-b1c0-2b862322ad5f" />
+                      <option name="method" value="PUT" />
+                      <option name="name" value="Update" />
+                      <option name="sortWeight" value="3000000" />
+                      <option name="url" value="http://localhost:8000/user" />
+                    </requestState>
+                  </list>
+                </option>
+                <option name="sortWeight" value="1000000" />
+                <option name="variables">
+                  <variablesState>
+                    <option name="json" value="{&#10;  &quot;URL&quot;: &quot;http://localhost&quot;&#10;}" />
+                  </variablesState>
+                </option>
+              </folderState>
+            </list>
+          </option>
+          <option name="id" value="2eed946a-b444-4a1f-9de8-5e4a33720d70" />
+          <option name="name" value="Food Order" />
+          <option name="selectedEnvironmentIds">
+            <map>
+              <entry key="default" />
+            </map>
+          </option>
+          <option name="syncProperties">
+            <synchronizationPropertiesState>
+              <option name="autoSync" value="true" />
+              <option name="folderPath" value="C:\Users\Development\WebstormProjects\Online-Food-Order-System\.jetclient" />
+            </synchronizationPropertiesState>
+          </option>
+        </folderState>
+      </list>
+    </option>
+    <option name="id" value="263ddb7a-d820-4de0-816f-e8999796463e" />
+    <option name="version" value="6" />
+  </component>
+</project>

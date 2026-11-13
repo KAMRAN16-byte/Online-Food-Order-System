@@ -5,31 +5,27 @@ const jwt = require('jsonwebtoken')
 const config = require('../utils/config')
 const createResult = require('../utils/result')
 
-router.post('/signup', async (req, res) =>
-{
+router.post('/signup', async (req, res) => {
     const {name, email, mobile} = req.body;
     const hashPassword = cryptojs.SHA256(req.body.password);
-    const sql = `INSERT INTO user (name, email, password, mobile) VALUES (?, ?, ?, ?)`
-    try
-    {
+    const sql = `INSERT INTO user (name, email, password, mobile)
+                 VALUES (?, ?, ?, ?)`
+    try {
         const response = await pool.query(sql, [name, email, hashPassword, mobile])
         res.send(createResult(response[0], null))
-    } catch (error)
-    {
+    } catch (error) {
         res.send(createResult(null, error))
     }
 })
 
-router.post('/signin', (req, res) =>
-{
+router.post('/signin', (req, res) => {
     const hashPassword = cryptojs.SHA256(req.body.password);
     const sql = `SELECT *
                  FROM user
                  WHERE email = ?
                    AND password = ?`;
     pool.query(sql, [req.body.email, hashPassword])
-        .then(result =>
-        {
+        .then(result => {
             const response = result[0][0];
             response.token = jwt.sign({uid: response.uid}, config.SECRET_KEY);
             delete response.uid;
@@ -39,32 +35,40 @@ router.post('/signin', (req, res) =>
         .catch(error => res.send(createResult(null, error)))
 })
 
-router.get('/profile', async (req, res) =>
-{
+router.get('/', async (req, res) => {
     const sql = `SELECT *
                  FROM user
                  WHERE uid = ?`;
-    try
-    {
+    try {
         const response = (await pool.query(sql, [req.headers.uid]))[0][0];
         delete response.uid;
         delete response.password;
         res.send(createResult(response, null))
-    } catch (error)
-    {
+    } catch (error) {
         console.log(error)
         res.send(createResult(null, error))
     }
 })
 
-router.delete('/', (req, res) =>
-{
+router.put('/', async (req, res) => {
+    const {mobile} = req.body;
+    const sql = `UPDATE user
+                 SET mobile = ?
+                 where uid = ?`
+    try {
+        const response = await pool.query(sql, [mobile, req.headers.uid]);
+        res.send(createResult(response[0], null))
+    } catch (error) {
+        res.send(createResult(null, error))
+    }
+})
+
+router.delete('/', (req, res) => {
     const sql = `DELETE
                  FROM user
                  WHERE uid = ?`;
     pool.query(sql, [req.headers.uid])
-        .then(result =>
-        {
+        .then(result => {
             res.send(createResult(result, null))
         })
         .catch(error => res.send(createResult(null, error)))

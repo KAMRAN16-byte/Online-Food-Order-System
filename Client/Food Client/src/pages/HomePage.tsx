@@ -1,10 +1,28 @@
 import Menubar from "../components/Menubar.tsx";
+import {useContext, useEffect} from "react";
+import {LoginStatusContext} from "../App.tsx";
+import {toast} from "react-toastify";
+import {Outlet, useNavigate} from "react-router";
 
 function HomePage() {
+    const  {userLoginStatus} = useContext(LoginStatusContext)
+    console.log(userLoginStatus)
+    const navigate = useNavigate();
+    const onLoad = ()=>{
+        if(!userLoginStatus)
+        {
+            toast.info("Please sign in")
+            navigate("/")
+        }
+    }
+
+    useEffect(() => {
+        onLoad()
+    },[])
     return (
-        <div>
+        <div className={'h-screen w-full flex flex-col'}>
             <Menubar/>
-            <h1 className={'font-bold text-2xl'}> Home Page </h1>
+            <Outlet/>
         </div>
     )
 }

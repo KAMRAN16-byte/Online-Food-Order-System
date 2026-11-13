@@ -1,11 +1,13 @@
 import AuthenticationBg from "../components/Authentication-bg.tsx";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {userSignin} from "../services/UserService.ts";
-import type {UserSignin} from "../types/User.ts";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router";
+import Config from "../configs/Config.ts";
+import {LoginStatusContext} from "../App.tsx";
 
 function SigninPage() {
+    const  {userLoginStatus, setUserLoginStatus} = useContext(LoginStatusContext)
     const HandleSubmit = async (e) => {
         e.preventDefault();
 
@@ -13,13 +15,16 @@ function SigninPage() {
         try {
             const response = await userSignin({email, password})
             if (response.data.status === 'success') {
+                console.log("User Login Status : " + userLoginStatus);
                 setTimeout(()=>{
                     navigate("/home")
                 },2000)
+                setUserLoginStatus(true)
                 toast.success("Sign in successfully! :)");
-                const user :  UserSignin = response.data.data;
+                const user = response.data;
                 console.log(user);
-
+                window.sessionStorage.setItem(Config.TOKEN,user.data.token)
+                console.log("User Login Status : " + userLoginStatus);
             }
             else
             {
@@ -35,6 +40,20 @@ function SigninPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    const onLoad = ()=>
+    {
+        console.log("User Login Status : " + userLoginStatus);
+        if(userLoginStatus){
+            toast.info("Already Signed in ! :)");
+            navigate("/home");
+        }
+    }
+
+    useEffect(()=>{
+        onLoad();
+    },[])
+
     return (
         <div className={'relative h-screen w-full '}>
 

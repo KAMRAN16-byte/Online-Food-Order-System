@@ -1,6 +1,6 @@
 module.exports = (data, err) =>
 {
     if (data)
-        return {"status": "success", "Data": data};
-    return {"status": "failure", "Error": err};
+        return {"status": "success", "data": data};
+    return {"status": "failure", "error": err};
 }

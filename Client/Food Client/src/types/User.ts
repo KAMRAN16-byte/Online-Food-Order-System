@@ -1,14 +1,14 @@
-export interface UserSignup {
+export interface UserProfile {
     name: string
-    email : string
-    password: string
-    mobile : string
+    email: string
+    mobile: string
 }
 
-export interface UserSignin
-{
-    name: string
-    email : string
-    mobile : string
-    token : string
+export interface UserSignup extends UserProfile{
+
+    password: string
+}
+
+export interface UserSignin extends UserProfile{
+    token: string
 }

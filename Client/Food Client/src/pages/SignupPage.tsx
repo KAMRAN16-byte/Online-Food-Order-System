@@ -1,8 +1,9 @@
 import AuthenticationBg from "../components/Authentication-bg.tsx";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {userSignup} from "../services/UserService.ts";
 import {useNavigate} from "react-router";
 import {toast} from "react-toastify";
+import {LoginStatusContext} from "../App.tsx";
 
 
 function SignupPage() {
@@ -34,6 +35,20 @@ function SignupPage() {
         }
         document.getElementById('submit').classList.remove('disabled');
     }
+
+    const {userLoginStatus} = useContext(LoginStatusContext);
+    const onLoad = ()=>
+    {
+        console.log("User Login Status : " + userLoginStatus);
+        if(userLoginStatus){
+            toast.info("Already Signed in! :)");
+            navigate("/home");
+        }
+    }
+
+    useEffect(()=>{
+        onLoad();
+    },[])
 
     return (
         <div className={'relative h-screen w-full '}>
